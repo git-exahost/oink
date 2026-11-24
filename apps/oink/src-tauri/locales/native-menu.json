@@ -58,5 +58,20 @@
     "window": "윈도우",
     "minimize": "최소화",
     "close_window": "윈도우 닫기"
+  },
+  "pt-BR": {
+    "about": "Sobre o Oink",
+    "open": "Abrir o Oink",
+    "quit": "Sair do Oink",
+    "edit": "Editar",
+    "undo": "Desfazer",
+    "redo": "Refazer",
+    "cut": "Recortar",
+    "copy": "Copiar",
+    "paste": "Colar",
+    "select_all": "Selecionar tudo",
+    "window": "Janela",
+    "minimize": "Minimizar",
+    "close_window": "Fechar janela"
   }
 }

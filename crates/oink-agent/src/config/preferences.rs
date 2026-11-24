@@ -70,6 +70,8 @@ pub enum UiLanguage {
     Japanese,
     #[serde(rename = "ko")]
     Korean,
+    #[serde(rename = "pt-BR")]
+    PortugueseBrazil,
 }
 impl UiLanguage {
     /// Map `Auto` and the system's first preferred language to a UI language:
@@ -86,6 +88,9 @@ impl UiLanguage {
                 }
                 if base.eq_ignore_ascii_case("ko") {
                     return Self::Korean;
+                }
+                if base.eq_ignore_ascii_case("pt") {
+                    return Self::PortugueseBrazil;
                 }
                 let simplified = parts.next().is_none_or(|v| {
                     ["Hans", "CN", "SG"]
@@ -215,6 +220,9 @@ mod tests {
         }
         for locale in ["ko", "ko-KR", "ko_KP", "ko-Kore-KR"] {
             assert_eq!(UiLanguage::Auto.resolve(locale), UiLanguage::Korean, "{locale}");
+        }
+        for locale in ["pt", "pt-BR", "pt_BR", "pt-PT"] {
+            assert_eq!(UiLanguage::Auto.resolve(locale), UiLanguage::PortugueseBrazil, "{locale}");
         }
         for locale in ["jav", "kok"] {
             assert_eq!(UiLanguage::Auto.resolve(locale), UiLanguage::English, "{locale}");

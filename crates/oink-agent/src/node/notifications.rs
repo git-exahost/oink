@@ -796,6 +796,7 @@ fn disable_hint(language: crate::config::UiLanguage, kind: u8, mac: bool) -> Str
         SimplifiedChinese => format!("按住 {chord} 1 秒解除"),
         Japanese => format!("{chord} を1秒間押し続けると解除"),
         Korean => format!("{chord} 키를 1초 동안 눌러 해제"),
+        PortugueseBrazil => format!("Mantenha {chord} pressionado por 1 segundo para reativar"),
         _ => format!("Hold {chord} for 1 second to re-enable"),
     }
 }
@@ -836,6 +837,17 @@ fn copy(language: crate::config::UiLanguage, kind: u8) -> &'static str {
             "포인터 잠금이 해제되었습니다",
             "공유 마이크가 음소거되었습니다",
             "공유 마이크의 음소거가 해제되었습니다",
+        ][index],
+        PortugueseBrazil => [
+            "Desfazer",
+            "Modo de jogo ativado",
+            "Modo de jogo desativado",
+            "Ponteiro bloqueado",
+            "Teclado deste dispositivo desativado",
+            "Mouse deste dispositivo desativado",
+            "Bloqueio de ponteiro liberado",
+            "Microfone compartilhado silenciado",
+            "Microfone compartilhado com som ativado",
         ][index],
         _ => [
             "Undo",
@@ -898,6 +910,7 @@ mod tests {
             (English, "Hold Ctrl+Alt+Shift+U for 1 second to re-enable"),
             (Japanese, "Ctrl+Alt+Shift+U を1秒間押し続けると解除"),
             (Korean, "Ctrl+Alt+Shift+U 키를 1초 동안 눌러 해제"),
+            (PortugueseBrazil, "Mantenha Ctrl+Alt+Shift+U pressionado por 1 segundo para reativar"),
         ] {
             for kind in [4, 5] {
                 assert_eq!(disable_hint(language, kind, false), expected);
@@ -1048,6 +1061,11 @@ mod tests {
                 Korean,
                 "공유 마이크가 음소거되었습니다",
                 "공유 마이크의 음소거가 해제되었습니다",
+            ),
+            (
+                PortugueseBrazil,
+                "Microfone compartilhado silenciado",
+                "Microfone compartilhado com som ativado",
             ),
         ] {
             assert_eq!(copy(language, 7), muted);
@@ -1457,6 +1475,7 @@ mod tests {
             (English, "Pointer lock released"),
             (Japanese, "ポインターのロックを解除しました"),
             (Korean, "포인터 잠금이 해제되었습니다"),
+            (PortugueseBrazil, "Bloqueio de ponteiro liberado"),
         ] {
             assert_eq!(copy(language, 6), expected);
         }

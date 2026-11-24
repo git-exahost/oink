@@ -17,6 +17,9 @@ describe('automatic language', () => {
   it.each(['ko', 'ko-KR', 'ko_KP', 'ko-Kore-KR'])('maps %s to Korean', system => {
     expect(resolveLanguage('auto', system)).toBe('ko');
   });
+  it.each(['pt', 'pt-BR', 'pt_BR', 'pt-PT'])('maps %s to Brazilian Portuguese', system => {
+    expect(resolveLanguage('auto', system)).toBe('pt-BR');
+  });
   it.each(['zh-Hant', 'zh-Hant-CN', 'zh-TW', 'zh-HK', 'zh-MO', 'zh-Hant-HK', 'en-US', 'fr', '', 'zhx', 'zh-XX', 'jav', 'kok'])('maps %s to English', system => {
     expect(resolveLanguage('auto', system)).toBe('en');
   });
@@ -30,6 +33,7 @@ describe('automatic language', () => {
     expect(resolveLanguage('zh-Hans', ['en-US'])).toBe('zh-Hans');
     expect(resolveLanguage('ja', ['en-US'])).toBe('ja');
     expect(resolveLanguage('ko', ['ja-JP'])).toBe('ko');
+    expect(resolveLanguage('pt-BR', ['en-US'])).toBe('pt-BR');
   });
   it('uses the native macOS/Windows list even when the webview reports English', () => {
     vi.spyOn(navigator, 'language', 'get').mockReturnValue('en-US');
@@ -86,15 +90,22 @@ describe('catalog completeness', () => {
   });
 });
 
-describe.each(['en', 'zh-Hans', 'ja', 'ko'] as const)('counted messages in %s', language => {
+describe.each(['en', 'zh-Hans', 'ja', 'ko', 'pt-BR'] as const)('counted messages in %s', language => {
   it.each([0, 1, 2, 1.5])('agrees with a count of %s', count => {
     setLanguage(language);
     const plural = count === 1 ? '' : 's';
+    const ptPlural = (count === 0 || count === 1 || count === 1.5) ? 'one' : 'other';
     const expected = {
       en: [`Latency ${count} millisecond${plural}`, `${count} second${plural} ago`, `minute${plural}`, `${count} operation${plural} ${count === 1 ? 'is' : 'are'} still pending and will be interrupted.`],
       'zh-Hans': [`延迟 ${count} 毫秒`, `${count} 秒前`, '分钟', `还有 ${count} 项操作未完成，退出会中断它们。`],
       ja: [`遅延 ${count} ミリ秒`, `${count} 秒前`, '分', `完了していない操作が ${count} 件あります。終了すると中断されます。`],
       ko: [`지연 시간 ${count}밀리초`, `${count}초 전`, '분', `완료되지 않은 작업이 ${count}개 있습니다. 종료하면 중단됩니다.`],
+      'pt-BR': [
+        ptPlural === 'one' ? `Latência de ${count} milissegundo` : `Latência de ${count} milissegundos`,
+        ptPlural === 'one' ? `há ${count} segundo` : `há ${count} segundos`,
+        ptPlural === 'one' ? 'minuto' : 'minutos',
+        ptPlural === 'one' ? `Ainda há ${count} operação pendente e ela será interrompida ao sair.` : `Ainda há ${count} operações pendentes e elas serão interrompidas ao sair.`
+      ],
     }[language];
     expect([tr('延迟 {0} 毫秒', count), tr('{0} 秒前', count), tr('分钟', count), tr('还有 {0} 项操作未完成，退出会中断它们。', count)]).toEqual(expected);
   });
@@ -104,7 +115,7 @@ describe.each(['en', 'zh-Hans', 'ja', 'ko'] as const)('counted messages in %s', 
   });
   it('shows the context-free source text and its translation', () => {
     setLanguage(language);
-    expect(tr('state|关闭')).toBe({ en: 'Off', 'zh-Hans': '关闭', ja: 'オフ', ko: '끔' }[language]);
+    expect(tr('state|关闭')).toBe({ en: 'Off', 'zh-Hans': '关闭', ja: 'オフ', ko: '끔', 'pt-BR': 'Desativado' }[language]);
   });
 });
 
@@ -124,7 +135,7 @@ it('formats numbers, lists and language names for the active language', () => {
 });
 
 it('lists every language under its own name, with a secondary name only when it differs', () => {
-  expect(LANGUAGES.map(l => l.autonym)).toEqual(['简体中文', 'English', '日本語', '한국어']);
+  expect(LANGUAGES.map(l => l.autonym)).toEqual(['简体中文', 'English', '日本語', '한국어', 'Português (Brasil)']);
   setLanguage('ko');
-  expect(LANGUAGES.map(secondaryName)).toEqual(['중국어(간체)', '영어', '일본어', undefined]);
+  expect(LANGUAGES.map(secondaryName)).toEqual(['중국어(간체)', '영어', '일본어', undefined, '포르투갈어(브라질)']);
 });

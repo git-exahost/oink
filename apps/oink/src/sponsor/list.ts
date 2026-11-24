@@ -5,7 +5,7 @@ import wechatIcon from './wechat.svg';
 
 export interface LocalizedText {
   default: string;
-  locales?: Partial<Record<'zh' | 'en' | 'ja' | 'ko', string>>;
+  locales?: Partial<Record<'zh' | 'en' | 'ja' | 'ko' | 'pt-BR', string>>;
 }
 export interface SponsorItem {
   id: string;

@@ -139,6 +139,7 @@ it('explains a microphone forwarding loopback selection in every locale',()=>{
     en:'Microphone: Unavailable (Select a hardware microphone on the source device; a virtual loopback input cannot be shared)',
     ja:'マイク：利用不可（送信元デバイスでハードウェアマイクを選択してください。仮想ループバック入力は共有できません）',
     ko:'마이크: 사용 불가(소스 기기에서 하드웨어 마이크를 선택하세요. 가상 루프백 입력은 공유할 수 없습니다)',
+    'pt-BR':'Microfone: Indisponível (Selecione um microfone físico no dispositivo de origem; uma entrada de loopback virtual não pode ser compartilhada)',
   };
   for (const locale of Object.keys(copy) as (keyof typeof copy)[]) {
     setLanguage(locale);

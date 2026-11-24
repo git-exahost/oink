@@ -9,7 +9,7 @@
   <key>CFBundleDevelopmentRegion</key>
   <string>en</string>
   <key>CFBundleLocalizations</key>
-  <array><string>en</string><string>zh-Hans</string><string>ja</string><string>ko</string></array>
+  <array><string>en</string><string>zh-Hans</string><string>ja</string><string>ko</string><string>pt-BR</string></array>
   <key>LSUIElement</key>
   <true/>
 </dict>

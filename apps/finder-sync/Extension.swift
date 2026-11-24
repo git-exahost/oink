@@ -36,7 +36,7 @@ final class OinkFinderSync: FIFinderSync {
         guard prefs["enabled"] as? Bool == true, let target = destination(menuKind) else { return nil }
         menuDestination = target
         let language = prefs["language"] as? String ?? "en"
-        let title = ["zh-Hans": "粘贴为文件", "ja": "ファイルとして貼り付け", "ko": "파일로 붙여넣기"][language] ?? "Paste as File"
+        let title = ["zh-Hans": "粘贴为文件", "ja": "ファイルとして貼り付け", "ko": "파일로 붙여넣기", "pt-BR": "Colar como Arquivo"][language] ?? "Paste as File"
         let menu = NSMenu()
         menu.autoenablesItems = false
         let item = Self.makePasteAsFileMenuItem(title: title, image: pasteMenuImage())

@@ -4,6 +4,7 @@ export const LANGUAGES = [
   { id: 'en', autonym: 'English' },
   { id: 'ja', autonym: '日本語' },
   { id: 'ko', autonym: '한국어' },
+  { id: 'pt-BR', autonym: 'Português (Brasil)' },
 ] as const;
 export type Language = typeof LANGUAGES[number]['id'];
 /** The persisted preference: a language, or `auto` to follow the system. */
@@ -26,5 +27,6 @@ export function resolveLanguage(choice: string, system: string | readonly string
   if (choice !== 'auto') return isLanguage(choice) ? choice : 'en';
   const [base, qualifier] = (typeof system === 'string' ? system : system[0] ?? '').toLowerCase().split(/[-_]/);
   if (base === 'ja' || base === 'ko') return base;
+  if (base === 'pt') return 'pt-BR';
   return base === 'zh' && (qualifier === undefined || ['hans', 'cn', 'sg'].includes(qualifier)) ? 'zh-Hans' : 'en';
 }

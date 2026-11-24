@@ -47,6 +47,7 @@ pub fn language(value: UiLanguage) -> &'static str {
         UiLanguage::SimplifiedChinese => "zh-Hans",
         UiLanguage::Japanese => "ja",
         UiLanguage::Korean => "ko",
+        UiLanguage::PortugueseBrazil => "pt-BR",
         _ => "en",
     }
 }
@@ -55,6 +56,7 @@ pub fn title(language: &str) -> &'static str {
         "zh-Hans" => "粘贴为文件",
         "ja" => "ファイルとして貼り付け",
         "ko" => "파일로 붙여넣기",
+        "pt-BR" | "pt" => "Colar como Arquivo",
         _ => "Paste as File",
     }
 }

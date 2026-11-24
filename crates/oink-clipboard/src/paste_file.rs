@@ -96,6 +96,7 @@ pub fn stem(kind: Kind, language: &str, timestamp: &str) -> String {
         "zh" => ["粘贴的图片", "粘贴的富文本", "粘贴的文本"],
         "ja" => ["貼り付けた画像", "貼り付けたリッチテキスト", "貼り付けたテキスト"],
         "ko" => ["붙여넣은 이미지", "붙여넣은 서식 있는 텍스트", "붙여넣은 텍스트"],
+        "pt" => ["Imagem colada", "Texto formatado colado", "Texto colado"],
         _ => ["Pasted image", "Pasted rich text", "Pasted text"],
     };
     format!(
@@ -416,6 +417,7 @@ mod tests {
             ("en", "Pasted image"),
             ("ja", "貼り付けた画像"),
             ("ko", "붙여넣은 이미지"),
+            ("pt-BR", "Imagem colada"),
         ] {
             assert_eq!(
                 stem(Kind::Image, language, "2026-11-06 09.30.12"),
